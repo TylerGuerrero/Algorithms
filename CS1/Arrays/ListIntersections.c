@@ -154,4 +154,6 @@ void print_list_intersection_fanciest(int *array1, int len1, int *array2, int le
       j++;
     }
   }
+
+  printf("\n\n");
 }
