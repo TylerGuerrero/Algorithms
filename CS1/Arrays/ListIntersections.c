@@ -158,7 +158,7 @@ void print_list_intersection_fanciest(int *array1, int len1, int *array2, int le
   printf("\n\n");
 }
 
-// Big-O: Worst-Case: O(n^2), Best-Case: O(n), Space-Complexity: O(1)
+// Big-O: Worst-Case: O(n^2), Best-Case: O(1), Space-Complexity: O(1)
 int canMakeSum(int *array, int n, int key)
 {
   int i;
@@ -173,7 +173,7 @@ int canMakeSum(int *array, int n, int key)
   return 0;
 }
 
-// Big-O: Worst-Case: O(nlogn), Best-Case: O(n), Space-Complexity: O(1)
+// Big-O: Worst-Case: O(nlogn), Best-Case: O(1), Space-Complexity: O(1)
 int canMakeSumFancy(int *array, int n, int key)
 {
   int i;
@@ -188,7 +188,7 @@ int canMakeSumFancy(int *array, int n, int key)
   return 0;
 }
 
-// Big-O: Worst-Case: O(n), Best-Case: O(n), Space-Complexity: O(1)
+// Big-O: Worst-Case: O(n), Best-Case: O(1), Space-Complexity: O(1)
 int canMakeSumFanciest(int *array, int n, int key)
 {
   int i, j;
@@ -199,7 +199,7 @@ int canMakeSumFanciest(int *array, int n, int key)
   i = 0;
   j = n - 1;
 
-  while (i < j)
+  while (i <= j)
   {
     int sum = array[i] + array[j];
 
