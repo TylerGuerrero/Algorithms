@@ -274,10 +274,38 @@ int keyCounterFancy(int *array, int n, int key)
   return 0;
 }
 
-int keyCounterFanciest(int *array, int n, int key)
+// Big-O: Worst-Case: O(logn), Best-Case: O(logn), Space-Complexity: O(1)
+int keyCounterFanciest(int *array, int n, int key, int leftCall)
 {
+  int lo, mid, hi, idx;
+
   if (array == NULL || n == 0)
     return 0;
+
+  lo = 0;
+  hi = n - 1;
+  idx = -1;
+
+  while (lo <= hi)
+  {
+    mid = lo + (hi - lo) / 2;
+
+    if (key < array[mid])
+      hi = mid - 1;
+    else if (key > array[mid])
+      lo = mid + 1;
+    else
+    {
+      idx = mid;
+
+      if (leftCall)
+        hi = mid - 1;
+      else
+        lo = mid + 1;
+    }
+  }
+
+  return idx;
 }
 
 int main(void)
