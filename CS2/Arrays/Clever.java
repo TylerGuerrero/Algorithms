@@ -239,9 +239,9 @@ public class Clever
   public static int mcss(int [] array)
   {
     int max = 0;
-    int sum = 0;
-
     for (int i = 0; i < array.length; i++)
+    {
+      int sum = 0;
       for(int j = i; j < array.length; j++)
       {
         sum += array[j];
@@ -249,6 +249,7 @@ public class Clever
         if (sum > max)
           max = sum;
       }
+    }
 
     return max;
   }
