@@ -95,12 +95,12 @@ void print_array(int *array, int n)
     return;
 
   for (i = 0; i < n; i++)
-    printf("%d", array[i]);
+    printf("%d ", array[i]);
 
   printf("\n\n");
 }
 
-// Big-O: Worst-Case: O(n^2), Best-Case: O(n^2), Space-Complexity: O(1)
+// Big-O: Worst-Case: O(n^2), Best-Case: O(n), Space-Complexity: O(1)
 void print_list_intersection(int *array1, int len1, int *array2, int len2)
 {
   int i;
@@ -115,7 +115,7 @@ void print_list_intersection(int *array1, int len1, int *array2, int len2)
   printf("\n\n");
 }
 
-// Big-O: Worst-Case: O(nlogn), Best-Case: O(nlogn), Space-Complexity: O(1)
+// Big-O: Worst-Case: O(nlogn), Best-Case: O(n), Space-Complexity: O(1)
 void print_list_intersection_fancy(int *array1, int len1, int *array2, int len2)
 {
   int i;
@@ -156,4 +156,162 @@ void print_list_intersection_fanciest(int *array1, int len1, int *array2, int le
   }
 
   printf("\n\n");
+}
+
+// Big-O: Worst-Case: O(n^2), Best-Case: O(n), Space-Complexity: O(1)
+int canMakeSum(int *array, int n, int key)
+{
+  int i;
+
+  if (array == NULL || n == 0)
+    return 0;
+
+  for (i = 0; i < n; i++)
+    if (linear_search(array, n, key - array[i]))
+      return 1;
+
+  return 0;
+}
+
+// Big-O: Worst-Case: O(nlogn), Best-Case: O(n), Space-Complexity: O(1)
+int canMakeSumFancy(int *array, int n, int key)
+{
+  int i;
+
+  if (array == NULL || n == 0)
+    return 0;
+
+  for (i = 0; i < n; i++)
+    if (binary_search(array, n, key - array[i]))
+      return 1;
+
+  return 0;
+}
+
+// Big-O: Worst-Case: O(n), Best-Case: O(n), Space-Complexity: O(1)
+int canMakeSumFanciest(int *array, int n, int key)
+{
+  int i, j;
+
+  if (array == NULL || n == 0)
+    return 0;
+
+  i = 0;
+  j = n - 1;
+
+  while (i < j)
+  {
+    int sum = array[i] + array[j];
+
+    if (sum < key)
+      i++;
+    else if (sum > key)
+      j--;
+    else
+      return 1;
+  }
+
+  return 0;
+}
+
+// Big-O: Worst-Case: O(n), Best-Case: O(n), Space-Complexity: O(1)
+int keyCounter(int *array, int n, int key)
+{
+  int i, cnt;
+
+  if (array == NULL || n == 0)
+    return 0;
+
+  cnt = 0;
+  for (i = 0; i < n; i++)
+    if (array[i] == key)
+      cnt++;
+
+  return cnt;
+}
+
+// Big-O: Worst-Case: O(logn + n), Best-Case: O(logn), Space-Complexity: O(1)
+int keyCounterFancy(int *array, int n, int key)
+{
+  int lo, mid, hi;
+  int left, right, cnt;
+
+  if (array == NULL || n == 0)
+    return 0;
+
+  lo, cnt, left, right = 0;
+  hi = n - 1;
+
+  // case
+  while (lo <= hi)
+  {
+    mid = lo + (hi - lo) / 2;
+
+    if (key < array[mid])
+      hi = mid - 1;
+    else if (key > array[mid])
+      lo = mid + 1;
+    else
+    {
+      left = mid - 1;
+      while (left >= 0 && array[left] == key)
+      {
+        left--;
+        cnt++;
+      }
+
+      right = mid;
+      while (right < n && array[right] == key)
+      {
+        right++;
+        cnt++;
+      }
+
+      return cnt;
+    }
+  }
+
+  return 0;
+}
+
+int keyCounterFanciest(int *array, int n, int key)
+{
+  if (array == NULL || n == 0)
+    return 0;
+}
+
+int main(void)
+{
+  int *array1, *array2, n, i;
+
+	printf("How many integers shall we generate? ");
+	scanf("%d", &n);
+
+	srand(time(NULL));
+
+	// Create and print two sorted arrays of random integers.
+	array1 = create_sorted_array(n);
+	array2 = create_sorted_array(n);
+
+	printf("array1:\n");
+	print_array(array1, n);
+
+	printf("array2:\n");
+	print_array(array2, n);
+
+	// Call our various list intersection functions.
+	printf("List Intersection:\n");
+	print_list_intersection(array1, n, array2, n);
+
+	printf("List Intersection:\n");
+	print_list_intersection_fancy(array1, n, array2, n);
+
+	printf("List Intersection:\n");
+	print_list_intersection_fanciest(array1, n, array2, n);
+
+	// Clean up after yourself.
+	free(array1);
+	free(array2);
+
+	return 0;
 }
