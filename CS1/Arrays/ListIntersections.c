@@ -239,10 +239,10 @@ int keyCounterFancy(int *array, int n, int key)
   if (array == NULL || n == 0)
     return 0;
 
-  lo, cnt, left, right = 0;
+  lo = cnt = left = right = 0;
   hi = n - 1;
 
-  
+
   while (lo <= hi)
   {
     mid = lo + (hi - lo) / 2;
