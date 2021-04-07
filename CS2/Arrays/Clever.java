@@ -234,4 +234,41 @@ public class Clever
 
     return false;
   }
+
+  // Big-O: Worst-Case: O(n^2), Best-Case: O(n^2), Space Complexity: O(1)
+  public static int mcss(int [] array)
+  {
+    int max = 0;
+    int sum = 0;
+
+    for (int i = 0; i < array.length; i++)
+      for(int j = i; j < array.length; j++)
+      {
+        sum += array[j];
+
+        if (sum > max)
+          max = sum;
+      }
+
+    return max;
+  }
+
+  // Big-O: Worst-Case: O(n), Best-Case: O(n), Space Complexity: O(1)
+  public static int mcssOptimized(int [] array)
+  {
+    int max = 0;
+    int sum = 0;
+
+    for (int i = 0; i < array.length; i++)
+    {
+      sum += array[i];
+
+      if (sum > max)
+        max = sum;
+      else if (sum < 0)
+        sum = 0;
+    }
+
+    return max;
+  }
 }
