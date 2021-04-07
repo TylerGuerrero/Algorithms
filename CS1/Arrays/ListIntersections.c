@@ -242,7 +242,6 @@ int keyCounterFancy(int *array, int n, int key)
   lo = cnt = left = right = 0;
   hi = n - 1;
 
-
   while (lo <= hi)
   {
     mid = lo + (hi - lo) / 2;
