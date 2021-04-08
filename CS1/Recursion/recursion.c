@@ -240,7 +240,6 @@ int main(int argc, char **argv)
   print_string_reverse_fancy("sandwiches", strlen("sandwiches"), strlen("sandwiches"));
 	print_string_reverse("sandwiches", strlen("sandwiches"));
 
-
   printf("sum(5) = %d\n\n", sum(5));
 
   printf("Max element in array: %d\n", find_max_array(array, 13));
