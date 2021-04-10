@@ -30,6 +30,11 @@ public class Stack<AnyType>
     return list.showHead();
   }
 
+  public AnyType peek()
+  {
+    return top();
+  }
+
   public boolean isEmpty()
   {
     return list.isEmpty();
