@@ -206,3 +206,139 @@ void reverse_print_list(node *head)
 
   reverse_print_list_helper(head);
 }
+
+node *deleteNth(node *head, int n)
+{
+  node *current, *temp;
+  int i;
+
+  if (head == NULL)
+    return NULL;
+
+  // case for single node
+  if (head->next == NULL && n == 0)
+  {
+    current = head->next;
+    free(head);
+    return current;
+  }
+
+  // case for first node
+  if (n == 0)
+  {
+    current = head->next;
+    free(head);
+    return current;
+  }
+
+  i = 0;
+  current = head;
+  while ((current->next != NULL) && (i < n - 1))
+  {
+    current = current->next;
+    i++;
+  }
+
+  // case for last node
+  if (current->next == NULL)
+  {
+    printf("You went to far in the list\n");
+    return head;
+  }
+
+  temp = current->next->next;
+  free(current->next);
+  current->next = temp;
+  return head;
+}
+
+node *deleteNthRecursive(node *head, int n)
+{
+  node *temp;
+
+  if (head == NULL)
+    return NULL;
+
+  // case for sinlge node
+  if (n == 0)
+  {
+    temp = head->next;
+    free(head);
+    return temp;
+  }
+
+  head->next = deleteNthRecursive(head->next, n - 1);
+  return head;
+}
+
+node *deleteAlt(node *head)
+{
+  node *current, *next;
+
+  // case for single node or empty list
+  if (head == NULL || head->next == NULL)
+    return head;
+
+  current = head;
+  next = head->next;
+
+  // case for even and odd length linked list
+  while (current != NULL && next != NULL)
+  {
+    current->next = next->next;
+    free(next);
+    current = current->next;
+
+    // case for last node
+    if (current != NULL)
+      next = current->next;
+  }
+
+  return head;
+}
+
+node *deleteAltRecursive(node *head)
+{
+  node *next;
+
+  if (head == NULL || head->next == NULL)
+    return NULL;
+
+  next = head->next;
+  head->next = next->next;
+  free(next);
+  deleteAltRecursive(head->next);
+  return head;
+}
+
+node *insertSortedNode(node *head, int n)
+{
+  node *current, *sorted_node;
+
+  if (head == NULL)
+    return create_node(n);
+
+  // case for first node
+  if (n <= head->data)
+  {
+    sorted_node = create_node(n);
+    sorted_node->next = head;
+    return sorted_node;
+  }
+
+  current = head;
+  while (current->next != NULL && (n > current->next->data))
+    current = current->next;
+
+  // case for last node
+  if (current->next == NULL)
+  {
+    current->next = create_node(n);
+    return head;
+  }
+
+  sorted_node = create_node(n);
+  sorted_node->next = current->next;
+  current->next = sorted_node;
+  return head;
+}
