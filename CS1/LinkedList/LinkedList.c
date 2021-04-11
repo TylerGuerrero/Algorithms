@@ -318,7 +318,7 @@ node *insertSortedNode(node *head, int n)
     return create_node(n);
 
   // case for first node
-  if (head->data <= n)
+  if (n <= head->data)
   {
     sorted_node = create_node(n);
     sorted_node->next = head;
