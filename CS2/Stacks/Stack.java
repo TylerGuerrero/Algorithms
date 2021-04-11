@@ -1,4 +1,4 @@
-// Stack implmentation using Linked List
+// Stack implmentation using Linked List, LIFO(Last In First Out)
 
 // O(1) push is achieved by inserting nodes at the head of the linked list
 // O(1) pop is achieved by removing nodes from the head of the linked list
