@@ -218,9 +218,8 @@ node *deleteNth(node *head, int n)
   // case for single node
   if (head->next == NULL && n == 0)
   {
-    current = head->next;
     free(head);
-    return current;
+    return NULL;
   }
 
   // case for first node
@@ -231,8 +230,9 @@ node *deleteNth(node *head, int n)
     return current;
   }
 
-  i = 0;
   current = head;
+  i = 0;
+
   while ((current->next != NULL) && (i < n - 1))
   {
     current = current->next;
@@ -242,7 +242,7 @@ node *deleteNth(node *head, int n)
   // case for last node
   if (current->next == NULL)
   {
-    printf("You went to far in the list\n");
+    printf("Went to far in the list\n");
     return head;
   }
 
@@ -254,17 +254,16 @@ node *deleteNth(node *head, int n)
 
 node *deleteNthRecursive(node *head, int n)
 {
-  node *temp;
+  node *current;
 
   if (head == NULL)
     return NULL;
 
-  // case for sinlge node
   if (n == 0)
   {
-    temp = head->next;
+    current = head->next;
     free(head);
-    return temp;
+    return current;
   }
 
   head->next = deleteNthRecursive(head->next, n - 1);
@@ -275,14 +274,14 @@ node *deleteAlt(node *head)
 {
   node *current, *next;
 
-  // case for single node or empty list
-  if (head == NULL || head->next == NULL)
+  // case for single node
+  if (head == NULL  || head->next == NULL)
     return head;
 
   current = head;
   next = head->next;
 
-  // case for even and odd length linked list
+  // case for even or odd length linked list
   while (current != NULL && next != NULL)
   {
     current->next = next->next;
@@ -302,7 +301,7 @@ node *deleteAltRecursive(node *head)
   node *next;
 
   if (head == NULL || head->next == NULL)
-    return NULL;
+    return head;
 
   next = head->next;
   head->next = next->next;
@@ -319,7 +318,7 @@ node *insertSortedNode(node *head, int n)
     return create_node(n);
 
   // case for first node
-  if (n <= head->data)
+  if (head->data <= n)
   {
     sorted_node = create_node(n);
     sorted_node->next = head;
@@ -327,7 +326,7 @@ node *insertSortedNode(node *head, int n)
   }
 
   current = head;
-  while (current->next != NULL && (n > current->next->data))
+  while ((current->next != NULL) && (n > current->next->data))
     current = current->next;
 
   // case for last node
