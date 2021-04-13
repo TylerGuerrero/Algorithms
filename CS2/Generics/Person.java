@@ -38,11 +38,11 @@
 //          }
 //       }
 
-import java.util.*;
-import java.io.*;
+// when implementing a class with a interface the object we will put
+// the object into a collections class such as ArrayList, LinkedList etc...
 
-// when using the interface Comparable you will end up using the object
-// you implemented in a Collections class such ArrayList, LinkedList, ..etc
+import java.io.*;
+import java.util.*;
 
 public class Person implements Comparable<Person>
 {
@@ -65,16 +65,17 @@ public class Person implements Comparable<Person>
       return this.birthDay - rhs.birthDay;
   }
 
+  // constuctor method (constructs the object)
   Person(String name, String birthday)
   {
-		// The last word in the 'name' string will be the last name. Everything
-		// else will be the first name. For example:
+    // The last word in the 'name' string will be the last name. Everything
+    // else will be the first name. For example:
 
-		// "Sean Szumlanski" => firstName = Sean
-		//                      lastName  = Szumlanski
+    // "Sean Szumlanski" => firstName = Sean
+    //                      lastName  = Szumlanski
 
-		// "Regulus Arcturus Black" => firstName = Regulus Arcturus
-		//                             lastName  = Black
+    // "Regulus Arcturus Black" => firstName = Regulus Arcturus
+    //                             lastName  = Black
     int splitPoint = name.lastIndexOf(' ');
     this.firstName = name.substring(0, splitPoint);
     this.lastName = name.substring(splitPoint);
@@ -93,10 +94,11 @@ public class Person implements Comparable<Person>
 
   public String toString()
   {
-    return "(" + String.format("%02d", this.birthMonth) +
-           "/" + String.format("%02d", this.birthDay) +
-           "/" + String.format("%02d", this.birthYear) + ")" +
-           " " + this.firstName + "," + this.lastName;
+    return "(" + String.format("%02d", this.birthMonth) + "/" +
+                 String.format("%02d", this.birthDay) + "/" +
+                 String.format("%02d", this.birthYear) + ")" + " " +
+                 this.lastName + ", " + this.firstName;
+
   }
 
   public static void main(String [] args)
@@ -105,40 +107,51 @@ public class Person implements Comparable<Person>
     ArrayList<Person> list = new ArrayList<Person>();
 
     // add some Person objects to the ArrayList
-    list.add(new Person("Cada St-Merrein", "04/22/1961"));
-    list.add(new Person("Regulus Arcturus Black", "01/30/1961"));
-    list.add(new Person("Perceval Thoreau", "08/08/1450"));
-    list.add(new Person("Magdeleine Corriander Grabb", "05/19/1960"));
+		list.add(new Person("Cada St-Merrein", "04/22/1961"));
+		list.add(new Person("Regulus Arcturus Black", "01/30/1961"));
+		list.add(new Person("Perceval Thoreau", "08/08/1450"));
+		list.add(new Person("Magdeleine Corriander Grabb", "05/19/1960"));
 
     // print the unsorted ArrayList
-    System.out.println("Unsorted List");
+    System.out.println("Unsorted Array");
+    System.out.println("===============================");
     for (Person p : list)
       System.out.println(p);
 
+    // any of Java's collections can be sorted, provided that they implement
+    // the Comparable interface
     Collections.sort(list);
 
     System.out.println("");
-    System.out.println("Sorted List");
+    System.out.println("Sorted Array");
+    System.out.println("===============================");
     for (Person p : list)
       System.out.println(p);
 
+    // The Collections.sort() method does not apply to arrays, because the
+		// array is not a collection class. Instead, we use Arrays.sort(). Let's
+		// see how that works...
+
+		// first, shuffle the list so it's in some sort of random(ish) order again
     Collections.shuffle(list);
 
-    // Conversion of a collections class to object array
+    // convert a collections class to a object array
     Person [] array = new Person[list.size()];
     for (int i = 0; i < list.size(); i++)
       array[i] = list.get(i);
 
+    // print the unsorted ArrayList
     System.out.println("");
-    System.out.println("Unsorted List");
+    System.out.println("Unsorted Array");
+    System.out.println("===============================");
     for (Person p : array)
       System.out.println(p);
 
-    // sort an array
     Arrays.sort(array);
 
     System.out.println("");
-    System.out.println("Sorted List");
+    System.out.println("Sorted Array");
+    System.out.println("===============================");
     for (Person p : array)
       System.out.println(p);
   }
