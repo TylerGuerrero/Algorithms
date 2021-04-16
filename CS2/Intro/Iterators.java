@@ -3,9 +3,9 @@ import java.util.*;
 
 public class Iterators
 {
-  //   Java offers three was of iterating through its collections
-  //   classes (such as LinkedLists and ArrayLists). In this page, I
-  //   explore the pros and cons of each style of iteration.
+  // Java offers three was of iterating through its collections
+  // classes (such as LinkedLists and ArrayLists). In this page, I
+  // explore the pros and cons of each style of iteration.
   public static void main(String [] args)
   {
     LinkedList<Integer> list = new LinkedList<Integer>();
