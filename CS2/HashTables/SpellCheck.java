@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.HashSet;
 import java.util.Scanner;
 
-
 public class SpellCheck
 {
   public static void main(String [] args) throws IOException
