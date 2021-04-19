@@ -63,6 +63,7 @@ public class WordCount
         map.put(str, 1);
 
       // insert 2, more efficient
+
       // Integer i = map.get(str);
       // if (i != null)
       //   map.put(str, i + 1);
@@ -70,10 +71,12 @@ public class WordCount
       //   map.put(str, 1);
 
       // insert 3
+
       // map.put(str, map.getOrDefault(str, 0) + 1)
     }
 
     String questionableWord = "silly";
+
     if (map.containsKey(questionableWord))
       System.out.println(questionableWord + ": (" + map.get(questionableWord) + ") times");
     else
