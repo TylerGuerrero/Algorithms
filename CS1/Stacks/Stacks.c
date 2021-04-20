@@ -6,6 +6,16 @@
 #include "LinkedList.h"
 #include "Stacks.h"
 
+// Stacks are LIFO structures (last in, first out), and they support the following operations:
+
+// push()  -  push element onto the top of the stack, -- head_insert()
+// pop()  -  removes the top item from the stack and returns its value -- head_delete
+// isEmpty()  -  returns true of the stack is empty, false otherwise
+// isFull()  -  returns true if the stack is full, false otherwise
+// top(), peek()  -  returns the value at the top of the stack without popping it
+// print_stack() - prints the stack
+
+
 Stack *createStack(void)
 {
   Stack *s = malloc(sizeof(Stack));
