@@ -126,9 +126,11 @@ int Precedence(char ch)
     case '+':
     case '-':
       return 1;
+
     case '*':
     case '/':
       return 2;
+
     case '^':
       return 3;
   }
@@ -139,7 +141,7 @@ int Precedence(char ch)
 // Big-O: O(n), Space-Complexity: O(n)
 char *infixToPostFix(char *exp)
 {
-  int i, k, len;
+  int i, k;
 
   // char stack
   Stack *s = createStack(strlen(exp));
@@ -147,15 +149,18 @@ char *infixToPostFix(char *exp)
 
   for (i = 0; exp[i] != '\0'; i++)
   {
-    // case 1: if it is a num output it
+    // case for if it is a number
     if (isNum(exp[i]))
       exp[k++] = exp[i];
-    // case 2: if it is a open parentheses
+    // case for open parentheses
+    // simply push it
     else if (exp[i] == '(')
       push(s, exp[i]);
     // case for closed parentheses
-    // at this point the operators are in the stack in greater order... so just pop
-    // since all you want is postfix
+    // pop until you have hit a open parentheses
+    // when we have a closed parentheses at this point
+    // the operators are in the stack in a least to greater order
+    // in Precedence
     else if (exp[i] == ')')
     {
       while (!isEmpty(s) && peek(s) != '(')
@@ -164,25 +169,27 @@ char *infixToPostFix(char *exp)
       if (!isEmpty(s) && peek(s) != '(')
         return NULL;
 
-      // pops the open parentheses
+      // pop the open parentheses
       pop(s);
     }
     // case for operators
-    // you have to evaluate whether the operator on the top the stack is greater
-    // then or equal to whats at the string at ith index cause if it is you pop
-    // to get to postfix if not you push exp at ith index because it is greater then
-    // the top of the stack
+
+    // when we push a operator we have to see if the top of the stack is greater
+    // then or equal to what we sre trying to push
+
+    // if the top of the stack is greater then or equal to the operator we pop
+    // if the top of the stack is less then the operator we push
+
     else
     {
-      while (!isEmpty(s) && (Precedence(peek(s)) >= Precedence(exp[i])))
+      while (!isEmpty(s) && Precedence(peek(s)) >= Precedence(exp[i]))
         exp[k++] = pop(s);
 
-      // push at this point becasue it greater then the operator on top the stack
       push(s, exp[i]);
     }
   }
 
-  // pop the rest the stack
+  // pop the rest out of the stack
   while (!isEmpty(s))
     exp[k++] = pop(s);
 
@@ -202,10 +209,8 @@ int evaluatePostfix(char *exp)
 
   for (i = 0; exp[i] != '\0'; i++)
   {
-    // case 1: is a number
     if (isNum(exp[i]))
       push(s, exp[i] - '0');
-    // cases for operators
     else
     {
       op1 = pop(s);
@@ -214,15 +219,13 @@ int evaluatePostfix(char *exp)
       switch (exp[i])
       {
         case '+': push(s, op2 + op1); break;
-        case '*': push(s, op2 * op1); break;
         case '-': push(s, op2 - op1); break;
+        case '*': push(s, op2 * op1); break;
         case '/': push(s, op2 / op1); break;
       }
     }
   }
 
-  // pop becasue their will only be one element left
-  // which is your result
   return pop(s);
 }
 
