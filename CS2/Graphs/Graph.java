@@ -140,4 +140,12 @@ public class Graph
 
     return cnt;
   }
+
+  public static void main(String [] args) throws Exception
+	{
+		Graph g = new Graph("g1.txt");
+		System.out.println("BFS(0):"); g.BFS(0);
+		System.out.println("DFS(0):"); g.DFS(0);
+		System.out.println("DFS(3):"); g.DFS(3);
+  }
 }
