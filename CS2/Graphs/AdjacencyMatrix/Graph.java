@@ -92,6 +92,29 @@ public class Graph
         DFS(visited, i);
   }
 
+  public void DFSIterative(int source)
+  {
+    Stack<Integer> s = new Stack<Integer>();
+    boolean [] visited = new boolean[matrix.length];
+
+    s.push(source);
+
+    while (!s.isEmpty())
+    {
+      int node = s.pop();
+
+      // Stack may have same vertex twice
+      if (visited[node]) continue;
+
+      visited[node] = true;
+      System.out.println(node);
+
+      for (int i = 0; i < matrix.length; i++)
+        if (matrix[node][i] && !visited[i])
+          s.push(i);
+    }
+  }
+
   // Big-O: O(|V|^2), Space-Complexity: O(|V|)
   public int countConnectedComponent()
   {
@@ -154,7 +177,7 @@ public class Graph
   {
   	Graph g = new Graph("g1.txt");
   	System.out.println("BFS(0):"); g.BFS(0);
-  	System.out.println("DFS(0):"); g.DFS(0);
-  	System.out.println("DFS(3):"); g.DFS(3);
+  	System.out.println("DFS(0):"); g.DFSIterative(1);
+  	System.out.println("DFS(3):"); g.DFS(0);
   }
 }
