@@ -181,5 +181,6 @@ public class Graph
   	System.out.println("BFS(0):"); g.BFS(0);
   	System.out.println("DFSIterative(3):"); g.DFSIterative(3);
   	System.out.println("DFS(3):"); g.DFS(3);
+    System.out.println("countConnectedCoponents(): " + g.countConnectedComponent());
   }
 }
