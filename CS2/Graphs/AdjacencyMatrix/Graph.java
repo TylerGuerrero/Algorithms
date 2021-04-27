@@ -179,7 +179,7 @@ public class Graph
   {
   	Graph g = new Graph("g1.txt");
   	System.out.println("BFS(0):"); g.BFS(0);
-  	System.out.println("DFS(0):"); g.DFSIterative(1);
-  	System.out.println("DFS(3):"); g.DFS(0);
+  	System.out.println("DFSIterative(3):"); g.DFSIterative(3);
+  	System.out.println("DFS(3):"); g.DFS(3);
   }
 }
