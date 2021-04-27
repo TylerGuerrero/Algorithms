@@ -92,6 +92,8 @@ public class Graph
         DFS(visited, i);
   }
 
+  // Iterative BFS method.
+  // Big-O: O(|V|^2), Space-Complexity: O(|V|)
   public void DFSIterative(int source)
   {
     Stack<Integer> s = new Stack<Integer>();
