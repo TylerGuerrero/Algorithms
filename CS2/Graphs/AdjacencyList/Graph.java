@@ -77,12 +77,14 @@ public class Graph
     }
   }
 
+  // Big-O: O(|V| + |E|), Space-Complexity: O(|V|)
   public void DFS(int source)
   {
     boolean [] visited = new boolean[this.V];
     DFS(source, visited);
   }
 
+  // Big-O: O(|V| + |E|), Space-Complexity: O(|V|)
   private void DFS(int node , boolean [] visited)
   {
     visited[node] = true;
@@ -98,6 +100,7 @@ public class Graph
     }
   }
 
+  // Big-O: O(|V|^2 + |V|*|E|), Space-Complexity: O(|V|)
   public int countConnectedComponents()
   {
     boolean [] visited = new boolean[this.V];
