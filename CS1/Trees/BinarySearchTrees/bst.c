@@ -244,3 +244,172 @@ int height_excessively_fancy(node *root)
 {
   return (root == NULL) ? -1 : 1 + height_excessively_fancy(root->left) + height_excessively_fancy(root->right);
 }
+
+int find_max(node *root)
+{
+  int m;
+
+  if (root == NULL)
+    return INT_MIN;
+
+  m = max(find_max(root->left), find_max(root->right));
+  return max(root->data, m);
+}
+
+int find_max_alternative(node *root)
+{
+  if (root == NULL)
+    return INT_MIN;
+
+  return (max(root->data, max(find_max_alternative(root->left),
+                              find_max_alternative(root->right))));
+}
+
+int regular_binary_search_tree(node *root, int key)
+{
+  if (root == NULL)
+    return 0;
+  else if (root->data == key)
+    return 1;
+  else
+    return (regular_binary_search_tree(root->left, key) || regular_binary_search_tree(root->right, key));
+}
+
+int key_count(node *root, int key)
+{
+  if (root == NULL)
+    return 0;
+  else if (root->data == key)
+    return 1 + key_count(root->left, key) + key_count(root->right, key);
+  else
+    return key_count(root->left, key) + key_count(root->right, key);
+}
+
+int key_count_fancy(node *root, int key)
+{
+  if (root == NULL)
+    return 0;
+
+  return (root->data == key) + key_count_fancy(root->left, key) +
+                               key_count_fancy(root->right, key);
+}
+
+int count_one_child_nodes(node *root)
+{
+  if (root == NULL)
+    return 0;
+  else if (((root->left != NULL) && (root->right == NULL)) || ((root->right != NULL) && (root->left = NULL)))
+    return 1 + count_one_child_nodes(root->left) + count_one_child_nodes(root->right);
+  else
+    return count_one_child_nodes(root->left) + count_one_child_nodes(root->right);
+}
+
+int count_one_child_nodes_alt(node *root)
+{
+  if (root == NULL)
+    return 0;
+
+  return (((root->left != NULL) && (root->right == NULL)) ||
+         ((root->left == NULL) && (root->right != NULL))) +
+         count_one_child_nodes_alt(root->left) + count_one_child_nodes_alt(root->right);
+}
+
+int count_one_child_nodes_fancy(node *root)
+{
+  if (root == NULL)
+    return 0;
+    else if (root->left == NULL && root->right != NULL)
+    return 1 + count_one_child_nodes_fancy(root->left);
+  else if (root->right != NULL && root->left == NULL)
+    return 1 + count_one_child_nodes_fancy(root->right);
+  else
+    return count_one_child_nodes_fancy(root->left) + count_one_child_nodes_fancy(root->right);
+}
+
+int count_one_child(node *root)
+{
+  if (root == NULL)
+    return 0;
+  else if (root->left == NULL && root->right == NULL)
+    return 0;
+  else if (root->left == NULL || root->right == NULL)
+    return 1 + count_one_child(root->right) + count_one_child(root->left);
+  else
+    return count_one_child(root->right) + count_one_child(root->left);
+}
+
+int count_one_child_fancy(node *root)
+{
+  if (root == NULL)
+    return 0;
+  else if (root->left == NULL && root->right == NULL)
+    return 0;
+  else
+    return ((root->left == NULL) || (root->right == NULL)) +
+            count_one_child_fancy(root->left) + count_one_child_fancy(root->right);
+}
+
+int count_leaf_nodes(node *root)
+{
+  if (root == NULL)
+    return 0;
+  else if (root->left == NULL && root->right == NULL)
+    return 1;
+  else
+    return count_leaf_nodes(root->left) + count_leaf_nodes(root->right);
+}
+
+int BST_count_greater(node *root, int key)
+{
+  if (root == NULL)
+    return 0;
+  else if (root->data > key)
+    return 1 + BST_count_greater(root->left, key) + BST_count_greater(root->right, key);
+  else
+    return BST_count_greater(root->left, key) + BST_count_greater(root->right, key);
+}
+
+int has_some_negativity_in_its_life(node *root)
+{
+  if (root == NULL)
+    return HOORAY;
+  else if (root->data < 0)
+    return OH_NOOO;
+  else
+    return has_some_negativity_in_its_life(root->left);
+}
+
+int has_some_negativity_in_its_life_iterative(node *root)
+{
+  if (root == NULL)
+    return HOORAY;
+
+  while (root != NULL)
+  {
+    if (root->data < 0)
+      return OH_NOOO;
+
+    root = root->left;
+  }
+
+  return HOORAY;
+}
+
+int tree_diff(node *a, node *b)
+{
+  if (a == NULL && b == NULL)
+    return 0;
+  else if (a == NULL || b == NULL)
+    return 1;
+  else if (a->data == b->data)
+    return 0;
+  else if (a->data != b->data)
+    return 1;
+  else
+    return (tree_diff(a->left, b->left) || tree_diff(a->right, b->right));
+}
+
+int main()
+{
+  return 0;
+}
