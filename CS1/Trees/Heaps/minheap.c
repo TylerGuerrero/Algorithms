@@ -158,11 +158,7 @@ int main(void)
   for (i = 0; i < n; i++)
   {
     printf("%d%c", deleteMin(heapyHeap), i == (n - 1) ? '\n' : ' ');
-    //printHeap(heapyHeap);
-    // Exercise: Write a printHeap() function that prints the array inside
-    // the heap struct, and call it here so you can see how the array is
-    // changing with each deleteMin() operation. Perform the deleteMin()
-    // operation on paper and verify that your results are the same.
+    printHeap(heapyHeap);
   }
 
   heapyHeap = destroyHeap(heapyHeap);
