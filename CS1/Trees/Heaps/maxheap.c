@@ -1,12 +1,7 @@
-// Implmentation of a MinHeap
-
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
-#define GENERIC_HEAP_FAILURE INT_MIN
-#define GENERIC_HEAP_SUCCESS INT_MAX
 
 typedef struct Heap
 {
@@ -14,6 +9,9 @@ typedef struct Heap
   int size;
   int capacity;
 } Heap;
+
+#define GENRIC_HEAP_SUCCESS INT_MAX
+#define GENRIC_HEAP_FAILURE INT_MIN
 
 Heap *createHeap(int capacity)
 {
@@ -65,7 +63,7 @@ void swap(int *array, int i, int j)
 
 int getParent(int child)
 {
-  return (child - 1) / 2;
+  return ((child - 1) / 2);
 }
 
 // Big-O: Worst-Case: O(logn), Best-Case: O(1)
@@ -73,7 +71,7 @@ void perculateUp(Heap *h, int child)
 {
   int parent = getParent(child);
 
-  while (h->array[child] < h->array[parent])
+  while (h->array[child] > h->array[parent])
   {
     swap(h->array, child, parent);
     child = parent;
@@ -85,48 +83,56 @@ void perculateUp(Heap *h, int child)
 int heapInsert(Heap *h, int child)
 {
   if (isFull(h))
-    return GENERIC_HEAP_FAILURE;
+    return GENRIC_HEAP_SUCCESS;
 
   h->array[h->size++] = child;
   perculateUp(h, h->size - 1);
-  return GENERIC_HEAP_SUCCESS;
+  return GENRIC_HEAP_SUCCESS;
 }
 
-int indexOfSmallerChild(Heap *h, int parent)
+int indexOfBiggerChild(Heap *h, int parent)
 {
   int lc, rc;
 
   lc = ((parent * 2 + 1) >= h->size) ? parent : parent * 2 + 1;
   rc = ((parent * 2 + 2) >= h->size) ? parent : parent * 2 + 2;
 
-  return (h->array[lc] < h->array[rc]) ? lc : rc;
+  return (h->array[lc] > h->array[rc]) ? lc : rc;
 }
 
 // Big-O: Worst-Case: O(logn), Best-Case: O(1)
 void perculateDown(Heap *h, int parent)
 {
-  int child = indexOfSmallerChild(h, parent);
+  int child = indexOfBiggerChild(h, parent);
 
-  while (h->array[parent] > h->array[child])
+  while (h->array[parent] < h->array[child])
   {
     swap(h->array, child, parent);
     parent = child;
-    child = indexOfSmallerChild(h, parent);
+    child = indexOfBiggerChild(h, parent);
   }
 }
 
 // Big-O: Worst-Case: O(logn), Best-Case: O(1)
-int deleteMin(Heap *h)
+int deleteMax(Heap *h)
 {
   int retval;
 
   if (isEmpty(h))
-    return GENERIC_HEAP_FAILURE;
+    return GENRIC_HEAP_SUCCESS;
 
-  retval = h->array[h->size - 1];
+  retval = h->array[0];
   h->array[0] = h->array[--h->size];
   perculateDown(h, 0);
   return retval;
+}
+
+int find_max(Heap *h)
+{
+  if (isEmpty(h))
+    return GENRIC_HEAP_FAILURE;
+
+  return h->array[0];
 }
 
 int last_parent_with_at_least_child(int size)
@@ -147,6 +153,7 @@ void printHeap(Heap *h)
   printf("\n\n");
 }
 
+
 int main(void)
 {
   int i, r, n = 10;
@@ -166,8 +173,12 @@ int main(void)
   printf("\nResult of heapsort: ");
   for (i = 0; i < n; i++)
   {
-    printf("%d%c", deleteMin(heapyHeap), i == (n - 1) ? '\n' : ' ');
-    printHeap(heapyHeap);
+    printf("%d%c", deleteMax(heapyHeap), i == (n - 1) ? '\n' : ' ');
+    //printHeap(heapyHeap);
+    // Exercise: Write a printHeap() function that prints the array inside
+    // the heap struct, and call it here so you can see how the array is
+    // changing with each deleteMin() operation. Perform the deleteMin()
+    // operation on paper and verify that your results are the same.
   }
 
   heapyHeap = destroyHeap(heapyHeap);
