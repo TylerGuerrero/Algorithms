@@ -74,12 +74,9 @@ public class Fib
   // Big-O: Worst-Case: O(n), Best-Case: O(n), Space Complexity: O(n)
   public static int fibDP(int n)
   {
-    if (n < 2)
-      return n;
-
     int [] dp = new int[n + 1];
 
-    // base-cases
+    // pre-processing bases cases
     dp[0] = 0;
     dp[1] = 1;
 
@@ -92,12 +89,9 @@ public class Fib
   // Big-O: Worst-Case: O(n), Best-Case: O(n), Space Complexity: O(1)
   private static int fibDPFancy(int n)
   {
-    if (n < 2)
-      return n;
-
     int [] dp = new int[2];
 
-    // base cases
+    // pre-processing bases cases
     dp[0] = 0;
     dp[1] = 1;
 
