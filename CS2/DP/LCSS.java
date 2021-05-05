@@ -24,6 +24,8 @@ public class LCSS
   // 2) The subsequence has to be in order but not contiguous
 
   // recursive solution that includes empty strings
+
+  // Big-O: Worst-Case: O(2^n), Best-Case: O(2^n), Space-Complexity: O(n)
   public static int lcss(String a, String b)
   {
     if (a.length() == 0 || b.length() == 0)
@@ -39,8 +41,11 @@ public class LCSS
   }
 
   // recursive memo solution that includes empty strings
+
+  // Big-O: Worst-Case: O(nm), Best-Case: O(nm), Space-Complexity: O(nm)
   public static int lcssMemo(String a, String b)
   {
+    // empty string included
     int [][] memo = new int[a.length() + 1][b.length() + 1];
     for (int i = 0; i <= a.length(); i++)
       Arrays.fill(memo[i], UNINITIALIZED);
@@ -49,6 +54,8 @@ public class LCSS
   }
 
   // recursive memo solution that includes empty strings
+
+  // Big-O: Worst-Case: O(nm), Best-Case: O(nm), Space-Complexity: O(n)
   private static int lcssMemo(String a, String b, int [][] memo)
   {
     // base case
@@ -72,8 +79,11 @@ public class LCSS
   }
 
   // dp solution that includes empty strings
+
+  // Big-O: Worst-Case: O(nm), Best-Case: O(nm), Space-Complexity: O(nm)
   public static int lcssDP(String a, String b)
   {
+    // empty string included
     int [][] dp = new int[a.length() + 1][b.length() + 1];
 
     // preprocessing base cases
@@ -97,6 +107,8 @@ public class LCSS
   }
 
   // recursive solution that does not include empty strings
+
+  // Big-O: Worst-Case: O(2^n), Best-Case: O(2^n), Space-Complexity: O(n)
   public static int lcssRecursiveNoEmptyStrings(String a, String b)
   {
     // one char at string a
@@ -117,8 +129,11 @@ public class LCSS
   }
 
   // dp solution that does not include empty strings
+
+  // Big-O: Worst-Case: O(nm), Best-Case: O(nm), Space-Complexity: O(nm)
   public static int lcssDPNoEmptyStrings(String a, String b)
   {
+    // empty string not included
     int [][] dp = new int[a.length()][b.length()];
     int i, j;
     // preprocessing base cases
@@ -143,6 +158,51 @@ public class LCSS
           dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
 
     return dp[a.length() - 1][b.length() - 1];
+  }
+
+  // Big-O: Worst-Case: O(nm), Best-Case: O(nm), Space-Complexity: O(m)
+  public static int lcssDPLessSpace(String a, String b)
+  {
+    // empty string included
+    int [][] dp = new int[2][b.length() + 1];
+
+    // pre-processing
+    // Assumes first row and column are already zeroed out.
+
+    for (int i = 1; i <= a.length(); i++)
+      for (int j = 1; j <= b.length(); j++)
+        if (a.charAt(i - 1) == b.charAt(j - 1))
+          dp[i % 2][j] = 1 + dp[(i - 1) % 2][j - 1];
+        else
+          dp[i % 2][j] = Math.max(dp[(i - 1) % 2][j],
+                                  dp[i % 2][j - 1]);
+
+    return dp[a.length() % 2][b.length()];
+  }
+
+  // Big-O: Worst-Case: O(nm), Best-Case: O(nm), Space-Complexity: O(MIN(n,m))
+  public static int lcssDPEvenLessSpace(String a, String b)
+  {
+    if (a.length() < b.length())
+    {
+      String temp = a; a = b; b = temp;
+    }
+
+    // empty string included
+    int [][] dp = new int[2][b.length() + 1];
+
+    // preprossesing bases cases
+    // Assumes first row and column are already zeroed out.
+
+    for (int i = 1; i <= a.length(); i++)
+      for (int j = 1; j <= b.length(); j++)
+        if (a.charAt(i - 1) == b.charAt(j - 1))
+          dp[i % 2][j] = 1 + dp[(i - 1) % 2][j - 1];
+        else
+          dp[i % 2][j] = Math.max(dp[(i - 1) % 2][j],
+                                  dp[i % 2][j - 1]);
+
+    return dp[a.length() % 2][b.length()];
   }
 
   public static void main(String [] args)
@@ -191,5 +251,24 @@ public class LCSS
     System.out.println(lcssDPNoEmptyStrings("modohodo", "hodo"));        // hodo => 4
     System.out.println(lcssDPNoEmptyStrings("kitten", "smithing"));      // itn => 3
 
+    System.out.println();
+
+    System.out.println(lcssDPLessSpace("goodmorning", "hodor"));    // odor => 4
+    System.out.println(lcssDPLessSpace("hodor", "goodmorning"));    // odor => 4
+    System.out.println(lcssDPLessSpace("hodorx", "goodmorningx"));  // odorx => 5
+    System.out.println(lcssDPLessSpace("racecar", "cream"));        // rea => 3
+    System.out.println(lcssDPLessSpace("modohodo", "hodo"));        // hodo => 4
+    System.out.println(lcssDPLessSpace("kitten", "smithing"));      // itn => 3
+
+    System.out.println();
+
+		System.out.println(lcssDPEvenLessSpace("goodmorning", "hodor"));    // odor => 4
+		System.out.println(lcssDPEvenLessSpace("hodor", "goodmorning"));    // odor => 4
+		System.out.println(lcssDPEvenLessSpace("hodorx", "goodmorningx"));  // odorx => 5
+		System.out.println(lcssDPEvenLessSpace("racecar", "cream"));        // rea => 3
+		System.out.println(lcssDPEvenLessSpace("modohodo", "hodo"));        // hodo => 4
+		System.out.println(lcssDPEvenLessSpace("kitten", "smithing"));      // itn => 3
+
+		System.out.println();
   }
 }

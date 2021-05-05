@@ -13,6 +13,8 @@ public class Binomial
   private static final int UNINITIALIZED = -1;
 
   // (n, k) = (row, col)
+
+  // Big-O: Worst-Case: O(2^n), Best-Case: O(2^n), Space-Complxity: O(n)
   public static int binomial(int n, int k)
   {
     if (k == 0 || k == n)
@@ -21,6 +23,7 @@ public class Binomial
     return binomial(n - 1, k - 1) + binomial(n - 1, k);
   }
 
+  // Big-O: Worst-Case: O(nk), Best-Case: O(nk), Space-Complxity: O(nk)
   public static int binomialMemo(int n, int k)
   {
     int [][] memo = new int[n + 1][k + 1];
@@ -31,6 +34,7 @@ public class Binomial
     return binomialMemo(n, k, memo);
   }
 
+  // Big-O: Worst-Case: O(nk), Best-Case: O(nk), Space-Complxity: O(nk)
   private static int binomialMemo(int n, int k, int [][] memo)
   {
     // base case
@@ -67,6 +71,7 @@ public class Binomial
     return result;
   }
 
+  // Big-O: Worst-Case: O(nk), Best-Case: O(nk), Space-Complxity: O(nk)
   public static int binomialDP(int n, int k)
   {
     int [][] dp = new int[n + 1][k + 1];
