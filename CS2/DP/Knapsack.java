@@ -46,14 +46,14 @@ public class Knapsack
       return knapsack(treasures, capacity, k - 1);
   }
 
-  // Big-O: Worst-Case: O(n), Best-Case: O(n), Space-Complexity: O(n)
+  // Big-O: Worst-Case: O(nk), Best-Case: O(nk), Space-Complexity: O(n)
   public static int knapsackMemo(Treasure [] treasures, int capacity)
   {
     HashMap<Point, Integer> memo = new HashMap<Point, Integer>();
     return knapsackMemo(treasures, capacity, treasures.length, memo);
   }
 
-  // Big-O: Worst-Case: O(n), Best-Case: O(n), Space-Complexity: O(n)
+  // Big-O: Worst-Case: O(nk), Best-Case: O(nk), Space-Complexity: O(n)
   private static int knapsackMemo(Treasure [] treasures, int capacity, int k, HashMap<Point, Integer> memo)
   {
     // base case
@@ -79,6 +79,55 @@ public class Knapsack
     return result;
   }
 
+  // Big-O: Worst-Case: O(nk), Best-Case: O(nk), Space-Complexity: O(nk)
+  public static int knapsackDP(Treasure [] treasures, int capacity)
+  {
+    int [][] dp = new int[treasures.length + 1][capacity + 1];
+
+    // preprocessing base cases
+    for (int i = 0; i <= treasures.length; i++)
+      dp[i][0] = 0;
+    for (int i = 0; i <= capacity; i++)
+      dp[0][i] = 0;
+
+    // Start at i=1 and j=1 since we already dealt with i=0 and j=0.
+		// Notice that i is acting as our varying number of items to choose from,
+		// and j is acting as our varying capacity
+
+    for (int i = 1; i <= treasures.length; i++)
+      for (int j = 1; j <= capacity; j++)
+        if (treasures[i - 1].weight <= j)
+          dp[i][j] = Math.max(
+            dp[i - 1][j - treasures[i - 1].weight] + treasures[i - 1].value,
+            dp[i - 1][j]
+          );
+        else
+          dp[i][j] = dp[i - 1][j];
+
+    return dp[treasures.length][capacity];
+  }
+
+  // Big-O: Worst-Case: O(nk), Best-Case: O(nk), Space-Complexity: O(k)
+  public static int knapsackDPCompressed(Treasure [] treasures, int capacity)
+  {
+    int [][] dp = new int[2][capacity + 1];
+
+    // preprocessing base case
+    // java set all rows and cols to zero
+
+    for (int i = 1; i <= treasures.length; i++)
+      for (int j = 1; j <= capacity; j++)
+        if (treasures[i - 1].weight <= j)
+          dp[i % 2][j] = Math.max(
+            dp[(i - 1) % 2][j - treasures[i - 1].weight] + treasures[i - 1].value,
+            dp[(i - 1) % 2][j]
+          );
+        else
+          dp[i % 2][j] = dp[(i - 1) % 2][j];
+
+    return dp[treasures.length % 2][capacity];
+  }
+
   public static void main(String [] args)
   {
     // The expected result here is 19, from taking the treasures at indices
@@ -94,7 +143,7 @@ public class Knapsack
 
     System.out.println(knapsack(treasures, 10));
     System.out.println(knapsackMemo(treasures, 10));
-    //System.out.println(knapsack_dp(treasures, 10));
-    //System.out.println(knapsack_dp_compressed(treasures, 10));
+    System.out.println(knapsackDP(treasures, 10));
+    System.out.println(knapsackDPCompressed(treasures, 10));
   }
 }
